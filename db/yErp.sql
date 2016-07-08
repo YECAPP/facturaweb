@@ -1,0 +1,121 @@
+SELECT * FROM `y_factura`;
+
+CREATE TABLE `y_factura` (
+  `IDFACTURA` int(4) NOT NULL AUTO_INCREMENT,
+  `NUMERO` varchar(20) NOT NULL,
+  `DESCRIP` varchar(50) NULL,
+  `IDCLIENTE` INT NOT NULL,
+  `FECHA` DATE NOT NULL,
+  `IDVENDEDOR` INT NOT NULL,
+  `TEMP` TINYINT(1),
+  PRIMARY KEY (`IDFACTURA`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+
+drop table y_facturaline
+
+CREATE TABLE `y_facturaline` (
+  `LINE` int(4) NOT NULL AUTO_INCREMENT,
+  `IDFACTURA` int(4) NOT NULL,
+  `IDPRODUCTO` int(4) NOT NULL,
+  `CODIGO` varchar(20) NOT NULL,
+  `DESCRIP` varchar(50) NULL,
+  `CANTIDAD` decimal(10,2) NULL,
+  `PRECIO` decimal(10,2) NULL,
+	PRIMARY KEY (`LINE`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+
+
+CREATE TABLE `y_producto` (
+	`IDPRODUCTO` int(4) NOT NULL AUTO_INCREMENT,
+	`CODIGO` varchar(20) NOT NULL,
+	`DESCRIP` varchar(50) NULL,
+	`MARCA` varchar(50) NULL,
+	`MODELO` varchar(50) NULL,
+	`COSTO` DECIMAL(10,2)  NULL,
+	`PRECIO` DECIMAL(10,2)  NULL,
+	PRIMARY KEY (`IDPRODUCTO`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+
+INSERT INTO `tiservicios`.`y_producto`
+(
+`CODIGO`,
+`DESCRIP`,
+`MARCA`,
+`MODELO`,
+`COSTO`)
+VALUES
+(
+'0001',
+'producto',
+'marca',
+'modelo',
+10.23);
+
+
+INSERT INTO `tiservicios`.`y_producto`
+(
+`CODIGO`,
+`DESCRIP`,
+`MARCA`,
+`MODELO`,
+`COSTO`)
+VALUES
+(
+'0002',
+'MAICENA ',
+'DURYEA',
+'MODELO',
+0.23);
+
+
+
+INSERT INTO `tiservicios`.`y_facturaline`
+(
+`IDFACTURA`,
+`IDPRODUCTO`,
+`CODIGO`,
+`DESCRIP`,
+`CANTIDAD`,
+`PRECIO`)
+VALUES
+(
+1,
+13,
+'001',
+'lINEA UNO',
+1,
+10);
+
+INSERT INTO `tiservicios`.`y_factura`
+(
+`NUMERO`,
+`DESCRIP`,
+`IDCLIENTE`,
+`FECHA`,
+`IDVENDEDOR`,
+`TEMP`)
+VALUES
+(
+'0001',
+'FACTURA UNO ',
+1,
+NOW(),
+1,
+1);
+
+DROP PROCEDURE facturaReserve
+DELIMITER //
+CREATE PROCEDURE facturaReserve
+(OUT lid int)
+BEGIN
+	INSERT INTO y_factura(TEMP,NUMERO,IDCLIENTE,FECHA,IDVENDEDOR) 
+	VALUES (1,'000',0,NOW(),0);
+	set lid=LAST_INSERT_ID();
+END
+//
+DELIMITER ;
+
+CALL facturaReserve(@LID)
+
+
+select @LID

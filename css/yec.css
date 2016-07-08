@@ -1,0 +1,47 @@
+@charset "utf-8";
+/* CSS Document */
+
+body{
+	/*background:#f1f9f9;*/
+}
+
+
+.session
+{
+	color:rgb(255,255,255); ;
+}
+.navbar{
+	/*
+	background-color:#192359;
+	color:#5E7EBF;*/
+	margin:20px;
+}
+.navbar-brand{
+	/*
+	background-color:#5E7EBF;
+	font-family:Arial;
+	color:#192359;*/
+}
+#btn-submit{
+	height:45px;
+}
+.searchText{
+	color:black;
+	width: 100%;
+
+}
+.ycabecera{
+	background-color:#333;
+	/*color:#9d9d9d;*/
+	color:#fff;
+	margin:10px;
+	padding: 10px;
+	border-radius: 5px;
+}
+
+
+th, td .ybutton {
+    border: 1px solid black;
+    overflow: hidden;
+    width: 10px;
+}
