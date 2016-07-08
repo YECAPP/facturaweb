@@ -10,9 +10,9 @@ if ($servername=="ylap"){
  }
 else {
 	 $db_host = "localhost";
-	 $db_name = "facturah_y_data";
-	 $db_user = "facturah_yec";
-	 $db_pass = "Yec$2016";
+	 $db_name = "yec17sitio";
+	 $db_user = "yec17sitiousr";
+	 $db_pass = "Clave.2016.sitio";
  }
  try{
 	$pdo= new PDO("mysql:host={$db_host};dbname={$db_name}",$db_user,$db_pass);
