@@ -285,18 +285,39 @@ $('#textBoxSearch').keyup(function() {
 		});
 	}
 
-	function client(str) {
+	function client(str,pag) {
 		
-		if (str === undefined){
+		if (str === undefined || str.trim()==""){
 			str=$('#textBoxSearch').val();
 		}
+		
+		if (pag === undefined){
+			pag=1;
+		}
 
-		var target="crud/client.php?q="+str;
+		var target="crud/client.php?q="+str+"&pagina="+pag;
 	    $.get( target, {}, function (data, status) {
 	        $("#loaded").html(data);
 	    });
 	}
+
+	// function client(str) {
+		
+	// 	if (str === undefined){
+	// 		str=$('#textBoxSearch').val();
+	// 	}
+
+	// 	var target="crud/client.php?q="+str;
+	//     $.get( target, {}, function (data, status) {
+	//         $("#loaded").html(data);
+	//     });
+	// }
 //funciones de clientes 
+
+
+//funciones de productos 
+	
+//funciones de productos 
 
 
 //funciones login form 

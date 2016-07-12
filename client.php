@@ -10,7 +10,8 @@
 <!--Incluir funciones-->
 <?php include_once 'template/head.php';?>
 
- <?php include_once 'template/navbar.php';?>
+<?php include_once 'template/navbar.php';?>
+
 <div class="container">
     <div class="ycabecera ">
         <div class="row " >
@@ -19,16 +20,16 @@
             </div>
         </div>
         <div class="row ">
-            <div class=" col-xs-12 col-md-9 searchText">
-                <input type="text" class=" form-control" size="60" placeholder="Introduzca su busqueda" id="textBoxSearch">
+            <div class="  col-md-9 ">
+                <input type="text" class=" form-control"  placeholder="Introduzca su busqueda" id="textBoxSearch">
             </div>
-            <div class=" col-xs-12 col-md-1">
+            <div class="  col-md-1">
                 <button class="btn btn-primary" id="buttonLoad"  data-toggle="modal">
                 <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
                 Cargar
                 </button>
             </div>
-            <div class="col-xs-12 col-md-2">
+            <div class=" col-md-2">
                 <button class="btn btn-success"  data-toggle="modal" data-target="#newForm" >
                 <span class="glyphicon glyphicon-new-window" aria-hidden="true"></span>
                 Nuevo Registro
@@ -105,12 +106,17 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary" onclick="updateClient()" >Save Changes</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="updateClient()" >Guardar Cambios</button>
                     <input type="hidden" id="updateHiddenId">
                 </div>
             </div>
         </div>
     </div>
 <!-- // Modal -->
+<script type="text/javascript">
+$('document').ready(function(){ 
+    client("");
+});
+</script>
 <?php include_once 'template/foot.php';?>

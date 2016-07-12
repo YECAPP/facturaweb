@@ -12,7 +12,7 @@
 ?>
 
 <!--NavBa-->
-<nav class="navbar navbar-inverse">
+<nav class="navbar  navbar-default" >
   <div class="container-fluid">
     <div class="navbar-header">
     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -20,17 +20,37 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span> 
       </button>
-      <a class="navbar-brand" href="#">Factura Web</a>
+      <a class="navbar-brand" href="#">
+        <span class="glyphicon glyphicon-credit-card" aria-hidden="true"> FacturaWeb </span></a>
+
     </div>
-  <div class="collapse navbar-collapse" id="myNavbar">
+  <div class="collapse navbar-collapse "  id="myNavbar">
     <ul class="nav navbar-nav">
-      <li <?=echoActiveClassIfRequestMatches("home")?>>    <a href="home.php">Inicio</a></li>
-      <li <?=echoActiveClassIfRequestMatches("client")?>>   <a href="client.php">Clientes</a></li>
-      <li <?=echoActiveClassIfRequestMatches("facturas")?>> <a href="facturas.php">Facturas</a></li> 
-      <li <?=echoActiveClassIfRequestMatches("pedidos")?>> <a href="pedidos.php">Pedidos</a></li> 
+      <li <?=echoActiveClassIfRequestMatches("home")?>> 
+        <a href="home.php">
+          <span class="glyphicon glyphicon-home" aria-hidden="true"> Inicio</span>
+        </a>
+      </li>
+      <li <?=echoActiveClassIfRequestMatches("client")?>>   
+        <a href="client.php">
+          <i class="fa fa-group"> Clientes</i>
+        </a>
+      </li>
+      <li <?=echoActiveClassIfRequestMatches("facturas")?>> 
+        <a href="facturas.php">
+          <i class="fa fa-edit"> Facturas</i>
+        </a>
+      </li> 
+      <li <?=echoActiveClassIfRequestMatches("prod")?>> 
+        <a href="prod.php">
+        <i class="fa fa-shopping-cart"> Productos</i>
+        </a>
+      </li> 
       <li><a href="crud/insertYFactLine.php">Compras</a></li> 
       <li><a href="#">Inventario</a></li> 
-      <li><a href="#">Vendedores</a></li> 
+      <li><a href="#">
+        <i class="fa fa-user"> Vendedores</i>
+      </a></li> 
     </ul>
     <ul class="nav navbar-nav navbar-right">
       <?php if (  isset($_SESSION['user_session'])):?>

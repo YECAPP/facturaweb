@@ -5,7 +5,6 @@ if(isset($_POST['q'])) {
 	//include("database.php");
     require_once 'dbconfig.php'; //se cambio 2 de julio por no funcionar con la clase 
 
-	
 	$data='<table class="table table-striped table-bordered  table-responsive">
             <thead>
                 <tr>

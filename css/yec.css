@@ -1,47 +1,102 @@
-@charset "utf-8";
-/* CSS Document */
 
-body{
-	/*background:#f1f9f9;*/
-}
+/* navbar 
+**#F8F8F8
+#1485CC
+*/
 
-
-.session
-{
-	color:rgb(255,255,255); ;
-}
-.navbar{
-	/*
-	background-color:#192359;
-	color:#5E7EBF;*/
-	margin:20px;
-}
-.navbar-brand{
-	/*
-	background-color:#5E7EBF;
-	font-family:Arial;
-	color:#192359;*/
-}
-#btn-submit{
-	height:45px;
-}
-.searchText{
-	color:black;
-	width: 100%;
-
-}
-.ycabecera{
-	background-color:#333;
-	/*color:#9d9d9d;*/
-	color:#fff;
-	margin:10px;
-	padding: 10px;
-	border-radius: 5px;
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+color: white;  /*Sets the text hover color on navbar*/
+background-color: #1485CC;
 }
 
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active >   
+ a:hover, .navbar-default .navbar-nav > .active > a:focus {
+  color: black; /*BACKGROUND color for active*/
+  background-color: black;
+}
+
+.navbar-default {
+    background-color: #0f006f;
+    /*border-color: #030033;*/
+}
+
+  .dropdown-menu > li > a:hover,
+   .dropdown-menu > li > a:focus {
+    color: #262626;
+   text-decoration: none;
+  background-color: #66CCFF;  /*change color of links in drop down here*/
+   }
+
+ .nav > li > a:hover,
+ .nav > li > a:focus {
+    text-decoration: none;
+    background-color: silver; /*Change rollover cell color here*/
+    background-color: #1485CC; /*Change rollover cell color here*/
+  }
+
+  .navbar-default .navbar-nav > li > a {
+   color: #1485CC; /*Change active text color here*/
+    }
+
+
+
+body {
+  /*background:#f1f9f9;*/ }
+
+.session {
+  color: white; }
+
+#btn-submit {
+  height: 45px; }
+
+.searchText {
+  color: black;
+  width: 100%; }
+
+.ycabecera {
+  background-color: #1485CC;
+  /*color:#9d9d9d;*/
+  color: #fff;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 5px; }
 
 th, td .ybutton {
-    border: 1px solid black;
-    overflow: hidden;
-    width: 10px;
-}
+  border: 1px solid black;
+  overflow: hidden;
+  width: 10px; }
+
+.widgetContainer {
+  border: 2px;
+  height: 225px;
+  text-align: justify;
+  -ms-text-justify: distribute-all-lines;
+  text-justify: distribute-all-lines;
+  /* just for demo */
+  min-width: 612px; }
+
+.widget {
+  background: #1e5799;
+  /* Old browsers */
+  background: -moz-linear-gradient(top, #1e5799 0%, #2989d8 50%, #207cca 51%, #7db9e8 100%);
+  /* FF3.6-15 */
+  background: -webkit-linear-gradient(top, #1e5799 0%, #2989d8 50%, #207cca 51%, #7db9e8 100%);
+  /* Chrome10-25,Safari5.1-6 */
+  color: #fff;
+  border: 20px; }
+
+.btnyec {
+  width: 200px;
+  height: 200px; }
+
+.widget2 {
+  vertical-align: top;
+  display: inline-block;
+  *display: inline;
+  zoom: 1; }
+
+
+
+
+
+/*# sourceMappingURL=yec.css.map */

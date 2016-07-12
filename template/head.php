@@ -4,14 +4,15 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Load Data  using jQuery Ajax and PHP MySQL</title>
+        <title>Factura Web</title>
         <link href="css/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
         <link href="css/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" media="screen"> 
-        <link href="css/style.css" rel="stylesheet" type="text/css" media="screen">
+
         <link href="css/yec.css" rel="stylesheet" type="text/css" media="screen">
         <link href="js/jquery-ui/jquery-ui.min.css" rel="stylesheet" >
         <script src="js/chartjs/dist/Chart.bundle.min.js" type="text/javascript"></script>
         <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+        <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
 	<style>
     canvas{
         -moz-user-select: none;

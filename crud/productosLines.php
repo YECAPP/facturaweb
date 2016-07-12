@@ -36,6 +36,9 @@ if(isset($_POST['q']) && isset($_POST['idfact'])) {
         $data.='<td><button onclick="facturaNewLineBuscarSelect('.$row['IDPRODUCTO'].','.$idfact.',1)" class="btn btn-danger">Sel</button></td>';
     	$data.='</tr>';
     }
+    $data.='</tbody>';
+    $data.='</table>';
+    
     $pdo=null;
     echo $data;
 }

@@ -158,5 +158,9 @@
         </div>
     </div>
 <!-- // Modal -->
-
+<script type="text/javascript">
+$('document').ready(function(){ 
+    fact("");
+});
+</script>
 <?php include_once 'template/foot.php';?>
