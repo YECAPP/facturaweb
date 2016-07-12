@@ -4,7 +4,7 @@
 		//$pdo = Database::connect();
 
 	
-		$sql="SELECT count(*) as valor FROM y_factura ";
+		$sql="SELECT count(*) as valor FROM y_factura where temp<>1";
 
 		$stmt = $pdo->prepare($sql);
 		$rows=$stmt->execute();

@@ -49,9 +49,7 @@ $('#textBoxSearch').keyup(function() {
 
 	//boton nueva factura para cambiar a vista de nueva factura 
 	$('#facturaButtonNew').click(function() {
-		$(".ycabecera").fadeOut("slow",function(){
-			$(".ydetail").fadeIn("slow",function(){});
-		});		
+		
 	});
 	//cerrar factura 
 	$('#facturaButtonNewClose').click(function() {
@@ -70,10 +68,22 @@ $('#textBoxSearch').keyup(function() {
 
 	//crear nueva factura, reserva y guarda el id de la nueva factura generada en un hidden
 	$('#facturaButtonNew').click(function() {
-		$(".ydetail").hide();
+		
 		$.get( "crud/facturaReserve.php", {}, function (data, status) {
-			$('#facturaNewHidden').val(data);
-		});	
+			
+			var arr=eval(data);
+
+			
+			$('#facturaNewHidden').val(arr[0]);
+			$('#facturaNewNumero').val(arr[1]);
+			$('#facturaNewIdVendedor').val(arr[2]);
+			$("#facturaNewIdVendedor").attr("disabled", true);
+			$("#facturaNewNumero").prop("readonly", true);
+		});
+
+		$(".ycabecera").fadeOut("slow",function(){
+		$(".ydetail").fadeIn("slow",function(){});
+		});		
 
 	});
 

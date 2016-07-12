@@ -24,7 +24,12 @@
    $count = $stmt->rowCount();
    
    if($row['pwd']==$password){
-      $_SESSION['user_session'] = $row['user'];    
+      $_SESSION['idUser_session'] = $row['idUser'];
+      $_SESSION['user_session'] = $row['user'];
+      $_SESSION['nombreUsr_session'] = $row['nombreUsr'];
+      $_SESSION['apellido_session'] = $row['apellido'];
+      $_SESSION['idRol_session'] = $row['idRol'];
+      $_SESSION['alta_session'] = $row['alta'];
       //echo "ok"; // log in
       echo "ok"; // log in
    }

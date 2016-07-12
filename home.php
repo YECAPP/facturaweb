@@ -39,7 +39,8 @@
               <div class=col-md-3>
                 <!--Widgets Clientes-->
                   <div class="widget2">
-                    <button type="button" class="btnyec widget">
+                    <button type="button" class="btnyec widget"
+                    onclick="window.location.href='client.php';">
                       <i class="fa fa-group fa-3x">
                         <div id="widget1">2k </div>
                       </i>
@@ -51,7 +52,8 @@
               <div class=col-md-3>
                   <!--Widgets Facturas-->
                   <div class="widget2">
-                    <button type="button" class="btnyec widget">
+                    <button type="button" class="btnyec widget"
+                    onclick="window.location.href='facturas.php';">
                       <i class="fa fa-edit fa-3x">
                         <div id="widget2">12k </div>
                       </i>
@@ -63,7 +65,8 @@
               <div class=col-md-3>
                   <!--Widgets Productos-->
                   <div class="widget2">
-                    <button type="button" class="btnyec widget">
+                    <button type="button" class="btnyec widget" 
+                    onclick="window.location.href='prod.php';">
                       <i class="fa fa-shopping-cart fa-3x">
                         <div id="widget3">2k </div>
                       </i>
@@ -75,7 +78,8 @@
               <div class=col-md-3>
                   <!--Widgets Vendedores-->
                   <div class="widget2">
-                    <button type="button" class="btnyec widget">
+                    <button type="button" class="btnyec widget" 
+                    onclick="window.location.href='vendor.php';">
                       <i class="fa fa-user fa-3x">
                         <div id="widget4">2k </div>
                       </i>

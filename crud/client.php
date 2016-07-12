@@ -45,10 +45,10 @@ if(isset($_GET['q'])) {
     	$data.='<td>'.$row['NOMBRE'].'</td>';
     	$data.='<td>'.$row['APELLIDO'].'</td>';
     	$data.='<td>'.$row['EMAIL'].'</td>';
-        $data.='<td><button onclick="loadClientData('.$row['IDCLIENTE'].')" class="btn ">
+        $data.='<td><button onclick="loadClientData('.$row['IDCLIENTE'].')" class="btn btn-warning">
         <span class="glyphicon glyphicon-edit"></span>
         </button></td>';
-        $data.='<td><button onclick="deleteClient('.$row['IDCLIENTE'].')" class="btn ">
+        $data.='<td><button onclick="deleteClient('.$row['IDCLIENTE'].')" class="btn btn-danger">
         <span class="glyphicon glyphicon-trash"></span>
         </button></td>';
     	$data.='</tr>';

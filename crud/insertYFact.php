@@ -17,14 +17,15 @@
 	    		$numero=trim($_POST['numero']);
 	    		$idcliente=trim($_POST['idcliente']);
 	    		$fecha=trim($_POST['fecha']);
-	    		$idvendedor=trim($_POST['idvendedor']);
+	    		$idvendedor=intval(trim($_POST['idvendedor']));
 	    		$descrip=trim($_POST['descrip']);
+	    		$temp=0;
 
 				//$pdo = new PDO('mysql:host=localhost;dbname=tiservicios', 'root', 'yec');
 
 				//$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-				$sql="UPDATE  y_factura SET NUMERO=:numero, IDCLIENTE=:idcliente, FECHA=:fecha, IDVENDEDOR=:idvendedor, DESCRIP=:descrip WHERE IDFACTURA=:idfactura";
+				$sql="UPDATE  y_factura SET NUMERO=:numero, IDCLIENTE=:idcliente, FECHA=:fecha, IDVENDEDOR=:idvendedor, DESCRIP=:descrip,TEMP=:temp WHERE IDFACTURA=:idfactura";
 
 	  			$stmt = $pdo->prepare($sql);
 	  			$rows = $stmt->execute(array(
@@ -33,7 +34,9 @@
 	  				':idcliente'=>$idcliente,
 	  				':fecha'=>$fecha,
 	  				':idvendedor'=>$idvendedor,
-	  				':descrip'=>$descrip));
+	  				':descrip'=>$descrip,
+	  				':temp'=>$temp
+	  				));
 //	  			echo 'data';
 				if( $rows == 1 ){
 			    	echo $idfactura;

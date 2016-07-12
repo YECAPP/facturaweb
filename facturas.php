@@ -36,10 +36,12 @@
                 </div>
             </div>
         </div>
+        
         <div class="row" >
             <div class="col-md-12" id="loaded">
             </div>
         </div>
+        
     <!--ycabecera-->
     <!--ylist-->
         <div class="ydetail">
@@ -72,14 +74,14 @@
                 <div class="row">
                     <div class="form-group col-md-2">
                         <label for="facturaNewFecha">Fecha</label>
-                        <input type="text" id="facturaNewFecha" placeholder="Last Name" class="form-control"/>
+                        <input type="text" id="facturaNewFecha" placeholder="Fecha" class="form-control"/>
                         
                     </div>
                     <div class="form-group col-md-2">
                         <label for="facturaNewIdVendedor">Vendedor</label>
                            <select class="form-control" id="facturaNewIdVendedor">
-                                <option value="Vendedor 1">Vendedor 1 </option>
-                                <option value="Vendedor 2">Vendedor 2 </option>
+                                <option value="1">Vendedor 1 </option>
+                                <option value="2">Vendedor 2 </option>
                            </select>
                         <!--<input type="text" id="facturaNewIdVendedor" placeholder="Last Name" class="form-control"/>-->
                     </div>
@@ -132,32 +134,6 @@
 <!-- // Modal -->
 
 
-<!-- Modal - update -->
-    <div class="modal fade" id="updateForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h4 class="modal-title" id="myModalLabel">Buscar Producto</h4>
-                    <input type="text" id="facturaNewLineBuscar" placeholder="Buscar" class="form-control"/>
-                </div>
-
-                <div class="modal-body">
-                    <div id="facturaNewLineBuscarProd" >
-                        
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary" onclick="addClient()">Agregar Registro</button>
-                    <button type="button" class="btn btn-primary" >Agregar Registro</button>
-                </div>
-            </div>
-        </div>
-    </div>
-<!-- // Modal -->
 <script type="text/javascript">
 $('document').ready(function(){ 
     fact("");

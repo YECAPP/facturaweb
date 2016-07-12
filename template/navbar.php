@@ -3,12 +3,13 @@
   //session_start();
   require_once 'crud/dbconfig.php'; //se cambio 2 de julio por no funcionar con la clase 
   
-  $sql = "SELECT * FROM y_user WHERE user=:uid";
-  $stmt=$pdo->prepare($sql);
-  $stmt->execute(array(":uid"=>$_SESSION['user_session']));
-  $row=$stmt->fetch(PDO::FETCH_ASSOC);
-  $nombre=$row['nombreUsr'];
-  $apellido=$row['apellido'];
+  // $sql = "SELECT * FROM y_user WHERE user=:uid";
+  // $stmt=$pdo->prepare($sql);
+  // $stmt->execute(array(":uid"=>$_SESSION['user_session']));
+  // $row=$stmt->fetch(PDO::FETCH_ASSOC);
+  // $nombre=$row['nombreUsr'];
+  // $apellido=$row['apellido'];
+
 ?>
 
 <!--NavBa-->
@@ -43,20 +44,19 @@
       </li> 
       <li <?=echoActiveClassIfRequestMatches("prod")?>> 
         <a href="prod.php">
-        <i class="fa fa-shopping-cart"> Productos</i>
+          <i class="fa fa-shopping-cart"> Productos</i>
         </a>
       </li> 
-      <li><a href="crud/insertYFactLine.php">Compras</a></li> 
-      <li><a href="#">Inventario</a></li> 
-      <li><a href="#">
-        <i class="fa fa-user"> Vendedores</i>
-      </a></li> 
+      <li <?=echoActiveClassIfRequestMatches("vendor")?>>
+        <a href="vendor.php">
+          <i class="fa fa-user"> Vendedores</i>
+        </a></li> 
     </ul>
     <ul class="nav navbar-nav navbar-right">
       <?php if (  isset($_SESSION['user_session'])):?>
         <!--<div class="session" id="yec">-->
         <li><a href="" id="perfil">
-          <span class="glyphicon glyphicon-user"></span><?php echo $nombre;?></a>
+          <span class="glyphicon glyphicon-user"></span> <?php echo $_SESSION['nombreUsr_session'];?></a>
         </li>
         <li><a href="" id="logOut">
           <span class="glyphicon glyphicon-log-out"></span>logout</a>
