@@ -4,7 +4,7 @@
 		//$pdo = Database::connect();
 
 	
-		$sql="SELECT idproducto as idprod, sum(cantidad) as cant FROM tiservicios.y_facturaline group by 1;";
+		$sql="SELECT idproducto as idprod, sum(cantidad) as cant FROM y_facturaline group by 1;";
 
 		$stmt = $pdo->prepare($sql);
 		$rows=$stmt->execute();
