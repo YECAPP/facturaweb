@@ -12,6 +12,7 @@
 
  <?php include_once 'template/navbar.php';?>
 <!--Incluir barra de navegacion-->
+
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
@@ -26,6 +27,7 @@
         </div>
         <div class="col-sm-7 col-md-10 ">
 <!--Estadisticas Titulo-->
+            
             <div class="row">
               <div class=col-md-12>
                 <h1 style="color:gray;">Estadisticas</h1>

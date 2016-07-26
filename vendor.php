@@ -13,7 +13,7 @@
 <?php include_once 'template/navbar.php';?>
 
 <div class="container">
-    <div class="ycabecera ">
+    <div class="ycabecera bg-primary ">
         <div class="row " >
             <div class=" col-xs-12 col-md-12">
                 <h3>Vendedores</h3>

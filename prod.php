@@ -13,32 +13,40 @@
 <?php include_once 'template/navbar.php';?>
 
 <div class="container">
-    <div class="ycabecera ">
-        <div class="row " >
-            <div class=" col-xs-12 col-md-12">
-                <h3>Productos</h3>
+    <div class="panel panel-primary ycabecera">
+        <div class="panel-heading" >
+            <div class="row " >
+                <div class=" col-xs-12 col-md-12">
+                    <h3>Productos</h3>
+                    <hr>
+                </div>
+            </div>
+            <div class="row ">
+                <div class=" col-md-10 ">
+                    <input type="text" class=" form-control"  placeholder="Introduzca su busqueda" id="textProdBoxSearch">
+                </div>
+
+                <div class=" col-md-2 buttonNuevo">
+                    <button class="btn btn-default pull-right" id="prodNuevoRegistro"  data-toggle="modal" data-target="#prodNewForm" >
+                    Nuevo 
+                    <span class="glyphicon glyphicon-plus"  aria-hidden="true"></span>
+                    </button>
+                </div>
             </div>
         </div>
-        <div class="row ">
-            <div class=" col-xs-12 col-md-9 searchText">
-                <input type="text" class=" form-control" size="60" placeholder="Introduzca su busqueda" id="textProdBoxSearch">
+    
+        <div class="panel-body">
+            <div class="row" >
+                <div class=" col-xs-12 col-md-12" id="loaded"></div>
             </div>
-            <div class=" col-xs-12 col-md-1">
-                <button class="btn btn-primary" id="prodButtonLoad"  data-toggle="modal">
-                <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
-                Cargar
-                </button>
-            </div>
-            <div class="col-xs-12 col-md-2">
-                <button class="btn btn-success" id="prodNuevoRegistro"  data-toggle="modal" data-target="#prodNewForm" >
-                <span class="glyphicon glyphicon-new-window"  aria-hidden="true"></span>
-                Nuevo Registro
-                </button>
+        </div>
+        <div class="panel-footer">
+        <div class="row" >
+            <div class=" col-md-12 text-right" >
+                Productos        
             </div>
         </div>
     </div>
-    <div class="row" >
-            <div class=" col-xs-12 col-md-12" id="loaded"></div>
     </div>
 </div>
 

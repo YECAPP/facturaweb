@@ -13,32 +13,38 @@
 <?php include_once 'template/navbar.php';?>
 
 <div class="container">
-    <div class="ycabecera ">
+    <div class="panel panel-primary ycabecera">
+    <div class="panel-heading" >
         <div class="row " >
             <div class=" col-xs-12 col-md-12">
                 <h3>Clientes</h3>
+                <hr>
             </div>
         </div>
         <div class="row ">
-            <div class="  col-md-9 ">
+            <div class="  col-md-10 ">
                 <input type="text" class=" form-control"  placeholder="Introduzca su busqueda" id="textBoxSearch">
             </div>
-            <div class="  col-md-1">
-                <button class="btn btn-primary" id="buttonLoad"  data-toggle="modal">
-                <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
-                Cargar
-                </button>
-            </div>
-            <div class=" col-md-2">
-                <button class="btn btn-success"  data-toggle="modal" data-target="#newForm" >
-                <span class="glyphicon glyphicon-new-window" aria-hidden="true"></span>
-                Nuevo Registro
+            <div class=" col-md-2 buttonNuevo">
+                <button class="btn btn-default pull-right"  data-toggle="modal" data-target="#newForm" >
+                Nuevo 
+                <span class="glyphicon glyphicon-plus"  aria-hidden="true"></span>
                 </button>
             </div>
         </div>
     </div>
-    <div class="row" >
-            <div class=" col-xs-12 col-md-12" id="loaded"></div>
+    <div class="panel-body">
+        <div class="row" >
+                <div class=" col-xs-12 col-md-12" id="loaded"></div>
+        </div>
+    </div>
+    <div class="panel-footer">
+        <div class="row" >
+            <div class=" col-md-12 text-right" >
+                Clientes        
+            </div>
+        </div>
+    </div>
     </div>
 </div>
 

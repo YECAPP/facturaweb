@@ -7,8 +7,8 @@ if(isset($_GET['q'])) {
 
     require_once 'dbconfig.php'; //se cambio 2 de julio por no funcionar con la clase 
 //Generando encabezado 	
-	$data='<table class="table table-striped table-bordered  table-responsive">
-            <thead>
+	$data='<table class="table table-condensed table-hover  table-bordered  table-responsive" >
+            <thead class="thead-inverse" >
                 <tr>
                     <th class="col-sm-2">Codigo Producto</th>
                     <th class="col-sm-3">Descripción</th>
@@ -19,6 +19,7 @@ if(isset($_GET['q'])) {
                 </tr>
             </thead>
             <tbody>';
+
 //generando paginado 
     $TAMANO_PAGINA = 10; 
     $pagina = 1;
@@ -65,7 +66,7 @@ if(isset($_GET['q'])) {
     $data.='</tbody>';
     $data.='</table>';
 
-//Ceeando bucle de paginado 
+//Creando bucle de paginado 
     $data.='<ul class="pagination">';
     //si el pagdown es diferente de cero crear un pagePrevious
     if ($pageDwn!=0){

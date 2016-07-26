@@ -1,8 +1,14 @@
 /*
-Author: Pradeep Khodke
-URL: http://www.codingcage.com/
+Author: Yuri Ernesto Calderón 
+Alias: YEC
+URL: http://www.tiservicios.net/
+email:ventas@tiservicios.net
 */
 //Asignacion de eventos
+
+//codigo para el incio
+$( 'a#logOut' ).attr("href", "logout.php");
+$( 'a#perfil' ).attr("href", "perfil.php");
 
 
 $('document').ready(function(){ 
@@ -20,168 +26,143 @@ $('document').ready(function(){
 
 });
 
-$( 'a#logOut' ).attr("href", "logout.php");
-$( 'a#perfil' ).attr("href", "perfil.php");
-
-$('#buttonLoad').click(function() {
-	client(" ");  		
-});
 
 
-$('#textBoxSearch').keyup(function() {
-	client($('#textBoxSearch').val());
-});
 
 
-//funciones facturas 
-	//control fecha en factura 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//funciones facturas****************************************************************************************
 	
-	$('#facturaButtonLoad').click(function() {
-		fact($('#facturaButtonLoad').val());
-	});
-
+	//controles de facturas 
+	//textbox para buscar facturas 
 	$('#textFacturaBoxSearch').keyup(function() {
 		fact($('#textFacturaBoxSearch').val());
 	});
-
-
+	//fecha datepicker para generar calendario en la factura
 	$("#facturaNewFecha" ).datepicker({ dateFormat: 'yy-mm-dd' });
 
-	//boton nueva factura para cambiar a vista de nueva factura 
-	$('#facturaButtonNew').click(function() {
-		
-	});
-	//cerrar factura 
+
+	//cerrar factura; oculta el ydetail, muestra la cabcera y luego la lista de facturas
 	$('#facturaButtonNewClose').click(function() {
-		$(".ycabecera").fadeIn("slow",function(){
-			$(".ydetail").fadeOut();	});	
+		$(".ydetail").fadeOut("slow",function(){
+			$(".ycabecera").fadeIn("slow",function(){
+				$("#list").fadeIn("slow",function(){});		
+			});
+		});
 	});
 
-	//factura nueva linea para buscar un producto seleccionar y poner la linea en la factura 
-	$('#facturaNewLineBuscar').keyup(function() {
-		facturaNewLineBuscar(
-			$('#facturaNewLineBuscar').val()
-		);
-	});
+	function deleteFact(idfactura){
+		var conf=confirm("Seguro de borrar");
+		if (conf==true){
+			$.post("crud/delYFact.php",{idfactura:idfactura},function(data,status){ 
+				fact($('#textFacturaBoxSearch').val());
+			});
+		}}		
 
-
-
-	//crear nueva factura, reserva y guarda el id de la nueva factura generada en un hidden
+//crear nueva factura, reserva y guarda el id de la nueva factura generada en un hidden
 	$('#facturaButtonNew').click(function() {
 		
 		$.get( "crud/facturaReserve.php", {}, function (data, status) {
 			
 			var arr=eval(data);
 
-			
+			//el php devuelve un array con todos los datos de reserva, luego hay que ponerlos en cada control 
 			$('#facturaNewHidden').val(arr[0]);
 			$('#facturaNewNumero').val(arr[1]);
 			$('#facturaNewIdVendedor').val(arr[2]);
 			$("#facturaNewIdVendedor").attr("disabled", true);
 			$("#facturaNewNumero").prop("readonly", true);
 		});
-
+		//ocultar el listado de facturas 
+		$("#list").fadeOut("slow",function(){});
 		$(".ycabecera").fadeOut("slow",function(){
 		$(".ydetail").fadeIn("slow",function(){});
 		});		
-
 	});
 
-	//guardar la factura completa
+//guardar la factura completa, llama a facturaButtonSave() y luego oculta los paneles
 	$('#facturaButtonSave').click(function() {
 		facturaButtonSave();
-		$(".ydetail").fadeIn();		
+		$(".ydetail").fadeIn("slow",function(){});
+		$("#list").fadeIn("slow",function(){
+			
+		});	
 	});
 
-	//inserta factura cabecera
-	function fact(str) {
+	//funcion que captura todos los datos de la factura y se prepara para guardarlos
+	function facturaButtonSave(){
+			var idfactura=$("#facturaNewHidden").val();
+			var numero=$("#facturaNewNumero").val();
+			var idcliente=$("#facturaNewIdcliente").val();
+
+			var fecha=$("#facturaNewFecha").val();
 			
-			if (str === undefined){
-				//str=$('#textBoxSearch').val();
-				str="";
-			}
+			var idvendedor=$("#facturaNewIdVendedor").val();
+
+			var descrip=$("#facturaNewDescrip").val();
+			
+			
+			var target="crud/insertYFact.php";
+
+			$.post( target, {
+				idfactura:idfactura,
+				numero:numero,
+				idcliente:idcliente,
+				fecha:fecha,
+				idvendedor:idvendedor,
+				descrip:descrip
+				}, function (data, status) {
+
+					var idfactura=$("#facturaNewHidden").val("");
+					var numero=$("#facturaNewNumero").val("");
+					var idcliente=$("#facturaNewIdcliente").val("");
+					var fecha=$("#facturaNewFecha").val("");		
+					var idvendedor=$("#facturaNewIdVendedor").val("");
+					var descrip=$("#facturaNewDescrip").val("");
+					$(".ycabecera").fadeIn("slow",function(){
+					$(".ydetail").fadeOut();	});
+					$("#facturaLine").html("<p class='text-center bg-info><br><br><br>Sin productos<br><br><br></p>");
+					fact($('#textFacturaBoxSearch').val());
+			});			
+		}
+
+	//Generar el listado de facturas el el div loaded, este procedimiento recibe dos parametros el str de busqueda y la pagina
+	function fact(str,pag) {			
+		
+        if (str === undefined || str.trim()==""){
+            str=$('#textFacturaBoxSearch').val();
+        }
+        
+        if (pag === undefined){
+            pag=1;
+        }
 
 			var target="crud/fact.php";
 		    $.post( target, {
-		    	q:str
+		    	q:str,
+		    	pagina:pag
 		    	}, function (data, status) {
-		    		
 		        	$("#loaded").html(data);
 		    });
 		}
 
-	function facturaButtonSave(){
-		var idfactura=$("#facturaNewHidden").val();
-		var numero=$("#facturaNewNumero").val();
-		var idcliente=$("#facturaNewIdcliente").val();
-
-		var fecha=$("#facturaNewFecha").val();
-		
-		var idvendedor=$("#facturaNewIdVendedor").val();
-
-		var descrip=$("#facturaNewDescrip").val();
-		
-		
-		var target="crud/insertYFact.php";
-
-		$.post( target, {
-			idfactura:idfactura,
-			numero:numero,
-			idcliente:idcliente,
-			fecha:fecha,
-			idvendedor:idvendedor,
-			descrip:descrip
-			}, function (data, status) {
-
-				var idfactura=$("#facturaNewHidden").val("");
-				var numero=$("#facturaNewNumero").val("");
-				var idcliente=$("#facturaNewIdcliente").val("");
-				var fecha=$("#facturaNewFecha").val("");		
-				var idvendedor=$("#facturaNewIdVendedor").val("");
-				var descrip=$("#facturaNewDescrip").val("");
-				$(".ycabecera").fadeIn("slow",function(){
-				$(".ydetail").fadeOut();	});	
-
-		});			
-	}
-
-	//llamada por busqueda de productos 
-	function facturaNewLineBuscar(str) {
-
-		//var idfact= newNombre=$("#facturaNewHidden").val();
-		var idfact=$("#facturaNewHidden").val();
-
-		if (str === undefined){
-			//str=$('#textBoxSearch').val();
-			str="";
-		}
-
-		var target="crud/productosLines.php";
-
-		$.post( target, {
-			idfact:idfact,
-			q:str
-			}, function (data, status) {
-			$("#facturaNewLineBuscarProd").html(data);
-		});		
-	}
-
-	function facturaNewLineBuscarSelect(idprod,idfact,cantidad) {
-			/*alert(idprod);file
-			alert(idfact);
-			alert(cantidad);*/
-			$.post("crud/insertYFactLine.php",{
-				idprod: idprod,
-				idfactura:idfact,
-				cantidad: cantidad
-			}, function (data,status){
-				
-				factline(idfact);
-
-			});
-		
-	}
-
+//genera el detalle de la factura  cuando se abre una faactura 
 	function factline(idfact,str) {
 			
 			if (str === undefined){
@@ -197,11 +178,107 @@ $('#textBoxSearch').keyup(function() {
 		    		
 		        	$("#facturaLine").html(data);
 		    });
+		}	
+
+	function deleteFactLine(line,idfactura){
+		var conf=confirm("Seguro de borrar");
+		if (conf==true){
+			$.post("crud/delYFactLine.php",{line:line},function(data,status){ 
+				factline(idfactura);
+			});
+		}		
+	}
+
+
+
+//form modal para busqueda de productos, llamada por busqueda de productos,recibe  un str de busqueda de produtos y un numero de pagina ya que el formulario modal debe paginar los resultados
+	//TextBox para buscar productos en el formulario modal 
+	$('#facturaNewLineBuscar').keyup(function() {
+		facturaNewLineBuscar(
+			$('#facturaNewLineBuscar').val()
+		);
+	});
+	
+	//Boton Nuevo Producto, manda a llamar el listado de producto en el modal
+	$('#facturaNewLineBuscarProdButton').click(function(){
+		facturaNewLineBuscar();
+	});
+
+	function facturaNewLineBuscar(str,pag) {
+
+		
+		var idfact=$("#facturaNewHidden").val();
+
+		if (str === undefined|| str.trim()==""){
+			//texbox de busqueda para nuevos productos
+			str=$('#facturaNewLineBuscar').val();
 		}
-//funciones facturas 
+
+		if (pag === undefined){
+			pag=1;
+		}
 
 
-//funciones de clientes 
+		var target="crud/productosLines.php";
+
+		$.post( target, {
+			idfact:idfact,
+			q:str,
+			pagina:pag
+			}, function (data, status) {
+			$("#facturaNewLineBuscarProd").html(data);
+		});		
+	}
+
+	//Boton seleccionar productos desde el cuadro modal 
+	function facturaNewLineBuscarSelect(idprod,idfact) {
+			/*alert(idprod);file
+			alert(idfact);*/
+			
+
+			cantidad=$("#facturaNewLineBuscarSelectCant_"+idprod).val();
+			precio=$("#facturaNewLineBuscarSelectPrec_"+idprod).val();
+
+			//alert(cantidad);
+			//alert(precio);
+			$.post("crud/insertYFactLine.php",{
+				idprod: idprod,
+				idfactura:idfact,
+				cantidad: cantidad,
+				precio:precio
+			}, function (data,status){
+				
+				factline(idfact);
+
+			});	
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//funciones de clientes ***********************************************************************************************
 	function deleteClient(id){
 		var conf=confirm("Seguro de borrar");
 		if (conf==true){
@@ -311,116 +388,6 @@ $('#textBoxSearch').keyup(function() {
 	    });
 	}
 
-	// function client(str) {
-		
-	// 	if (str === undefined){
-	// 		str=$('#textBoxSearch').val();
-	// 	}
 
-	// 	var target="crud/client.php?q="+str;
-	//     $.get( target, {}, function (data, status) {
-	//         $("#loaded").html(data);
-	//     });
-	// }
 //funciones de clientes 
 
-
-//funciones de productos 
-	
-//funciones de productos 
-
-
-//funciones login form 
-
-// $("#login-form").validate({
-//       rules:
-// 	  {
-// 			password: {
-// 			required: true,
-// 			},
-// 			user_email: {
-//             required: true,
-//             email: true
-//             },
-// 	   },
-//        messages:
-// 	   {
-//             password:{
-//                       required: "Introduzca su Password"
-//                      },
-//             user_email: "Ingrese su email",
-//        },
-// 	   submitHandler: submitForm	
-//        });  
-
-// function submitForm()
-// 	   {		
-// 			var data = $("#login-form").serialize();
-			
-// 			$.ajax({
-				
-// 			type : 'POST',
-// 			url  : 'Login_process.php',
-// 			data : data,
-// 			beforeSend: function()
-// 			{	
-// 				$("#error").fadeOut();
-// 				$("#btn-login").html('<span class="glyphicon glyphicon-transfer"></span> &nbsp; sending ...');
-// 			},
-// 			success :  function(response)
-// 			   {		
-// 			   		if(response.trim()=="ok"){
-// 			   			alert("entro");
-// 			   			window.location.href="home.php";
-// 			   		}
-
-// 					// if(response.trim()=="ok"){
-						
-// 					// 	$("#btn-login").html("entro");
-// 					// 	$("#btn-login").html('<img src="btn-ajax-loader.gif" /> &nbsp; Signing In ...');
-// 					// 	setTimeout('window.location.href="home.php"; ',4000);
-						
-// 					// }
-// 					// else{
-						
-// 					// 	$("#error").fadeIn(1000, function(){						
-// 					// 	$("#error").html('<div class="alert alert-danger"> <span class="glyphicon glyphicon-info-sign"></span> &nbsp; '+response+' !</div>');
-// 					// 	$("#btn-login").html('<span class="glyphicon glyphicon-log-in"></span> &nbsp; Sign In');
-// 					// 	});
-// 					// }
-// 			  }
-// 			});
-// 				return false;
-// 		}
-// //funciones login form 
-
-//papelero
-	// $('#prueba').click(function() {
-
-
-		// 	var idfact=82 ; 
-		// 	var idprod=3 ; 
-		// 	var cantidad=3 ; 
-
-		// 	$.post("crud/insertYFactLine.php",{
-		// 			idprod: idprod,
-		// 			idfactura: idfact,
-		// 			cantidad: cantidad
-		// 		}, function (data,status){
-					
-		// 			alert(data);
-		// 			//factline(idfact);
-		// 		});
-	// });
-
-
-	// $('#facturaNewIdcliente').load(function() {
-	// 	var target="crud/facturaNewIdclienteSelect"
-	// 	$.post( target, {
-	// 			idfact:idfact,
-	// 			q:str
-	// 			}, function (data, status) {
-	// 			$("#facturaNewLineBuscarProd").html(data);
-	// 		});			
-	// });
-//papelero

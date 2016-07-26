@@ -1,17 +1,19 @@
 <?php
 	session_start();
     require_once 'dbconfig.php'; //se cambio 2 de julio por no funcionar con la clase 
-
-
-
+    
 //generar correlativo automatico 
     $idvendor=$_SESSION['idUser_session'];
-    $sqlMaxNum="SELECT MAX(NUMERO) as NUM FROM y_factura WHERE IDVENDEDOR=".$idvendor;
+    $sqlMaxNum="SELECT MAX(CAST(NUMERO as signed)) as NUM FROM y_factura WHERE IDVENDEDOR=".$idvendor;
+
     $rowMaxNum = $pdo->query($sqlMaxNum);
 	$maxNumArray=$rowMaxNum->fetch();
 
 	$idMaxNum=$maxNumArray["NUM"];
+
 	$idMaxNumNew=intval($idMaxNum+1);
+
+
 
 //reservando factura 
     $lastInsertId=-1;

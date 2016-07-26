@@ -7,7 +7,7 @@ if(isset($_GET['q'])) {
 
 //creando encabezado 
 	$data='
-            <table class="table table-condensed table-hover  table-bordered  table-responsive">
+            <table class="table table-condensed table-hover  table-bordered  table-responsive" >
             <thead class="thead-inverse" >
                 <tr>
                     <th class="col-sm-4">Nombre</th>

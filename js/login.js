@@ -1,7 +1,3 @@
-/*
-Author: Pradeep Khodke
-URL: http://www.codingcage.com/
-*/
 
 $('document').ready(function()
 { 
