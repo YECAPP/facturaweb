@@ -3,6 +3,9 @@
 if(isset($_GET['q'])) {
 
     $q=TRIM($_GET['q']);
+    session_start();
+    $idVendor=$_SESSION['idUser_session'];
+    $idRol=$_SESSION['idRol_session'];
     
 
     require_once 'dbconfig.php'; //se cambio 2 de julio por no funcionar con la clase 
@@ -55,7 +58,13 @@ if(isset($_GET['q'])) {
         $data.='<td>'.$row['DESCRIP'].'</td>';
         $data.='<td>'.$row['MARCA'].'</td>';
         $data.='<td>'.$row['MODELO'].'</td>';
-        $data.='<td>'.$row['COSTO'].'</td>';
+
+        if ($idRol==1){
+            $data.='<td>'.$row['COSTO'].'</td>';
+        }else{
+            $data.='<td>0.00</td>';
+        }
+        
         $data.='<td>'.$row['PRECIO'].'</td>';
         $data.='<td><button onclick="loadProdData('.$row['IDPRODUCTO'].')" class="btn btn-warning">
         <span class="glyphicon glyphicon-edit"></span></button></td>';

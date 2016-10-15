@@ -8,15 +8,38 @@
 		$nombre=$_POST['nombre'];
 		$apellido=$_POST['apellido'];
 		$email=$_POST['email'];
+		$telefono=$_POST['telefono'];
+		$codigo=$_POST['codigo'];
 
-		$sql="UPDATE y_client  SET  NOMBRE=:nombre, APELLIDO=:apellido, EMAIL=:email  where idcliente=:idcliente";
-
+		$codpost=$_POST['codpost'];
+		$cdad=$_POST['cdad'];
+		$estado=$_POST['estado'];
+		$codtrib=$_POST['codtrib'];
+		
+	
+		$sql="UPDATE y_client  SET  
+			NOMBRE=:nombre,
+			APELLIDO=:apellido,
+			EMAIL=:email,
+			TELEFONO=:telefono,
+			CODIGO=:codigo,
+			COD_POST=:codpost,
+			CDAD=:cdad,
+			ESTADO=:estado,
+			CODTRIB=:codtrib
+		 WHERE idcliente=:idcliente";
 
 		$stmt = $pdo->prepare($sql);
 		$rows=$stmt->execute(array(	':idcliente'=>$idcliente,
 									':nombre'=>$nombre,
 									':apellido'=>$apellido,
-									':email'=>$email
+									':email'=>$email,
+									':telefono'=>$telefono,
+									':codigo'=>$codigo,
+									':codpost'=>$codpost,
+									':cdad'=>$cdad,
+									':estado'=>$estado,
+									':codtrib'=>$codtrib
 									));
 
 		$response = array();

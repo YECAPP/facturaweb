@@ -75,7 +75,7 @@ define ('PDF_HEADER_LOGO', 'Logo.jpg');
 /**
  * Header logo image width in user units.
  */
-define ('PDF_HEADER_LOGO_WIDTH', 15);
+define ('PDF_HEADER_LOGO_WIDTH', 25);
 
 /**
  * Cache directory for temporary files (full path).
@@ -110,12 +110,12 @@ define ('PDF_AUTHOR', 'www.tiservicios.net');
 /**
  * Header title.
  */
-define ('PDF_HEADER_TITLE', 'Factura');
+define ('PDF_HEADER_TITLE', 'Profeshop Books & Gifts SL');
 
 /**
  * Header description string.
  */
-define ('PDF_HEADER_STRING', "by Yec - www.tiservicios.net");
+define ('PDF_HEADER_STRING', "c/ Grumete, 12"."28260 Galapagar");
 
 /**
  * Document unit of measure [pt=point, mm=millimeter, cm=centimeter, in=inch].
@@ -125,7 +125,7 @@ define ('PDF_UNIT', 'mm');
 /**
  * Header margin.
  */
-define ('PDF_MARGIN_HEADER', 5);
+define ('PDF_MARGIN_HEADER', 2);
 
 /**
  * Footer margin.
@@ -135,7 +135,7 @@ define ('PDF_MARGIN_FOOTER', 10);
 /**
  * Top margin.
  */
-define ('PDF_MARGIN_TOP', 27);
+define ('PDF_MARGIN_TOP', 50);
 
 /**
  * Bottom margin.

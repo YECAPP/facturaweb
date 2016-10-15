@@ -8,13 +8,15 @@ if(isset($_POST['id'])||isset($_POST[id])!=""){
 	$modelo=$_POST['modelo'];
 	$costo=$_POST['costo'];
 	$precio=$_POST['precio'];
+	$tax=$_POST['tax'];
 
 	$sql='UPDATE y_producto SET 
 		DESCRIP=:descrip,
 		MARCA=:marca,
 		MODELO=:modelo,
 		COSTO=:costo,
-		PRECIO=:precio
+		PRECIO=:precio,
+		TAX=:tax
 		WHERE idproducto=:idproducto';
 	
 	$stmt=$pdo->prepare($sql);
@@ -25,6 +27,7 @@ if(isset($_POST['id'])||isset($_POST[id])!=""){
 		':modelo'=>$modelo,
 		':costo'=>$costo,
 		':precio'=>$precio,
+		':tax'=>$tax,
 		':idproducto'=>$idproducto));
 
 	$respones=array();

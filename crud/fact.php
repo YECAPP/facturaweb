@@ -1,9 +1,9 @@
 <?php
 if(isset($_POST['q'])) {
     $q=$_POST['q'];
-
-
-
+    session_start();
+    $idVendor=$_SESSION['idUser_session'];
+    $idRol=$_SESSION['idRol_session'];
 
 //buce de datos 
     require_once 'dbconfig.php'; //se cambio 2 de julio por no funcionar con la clase 
@@ -30,8 +30,13 @@ if(isset($_POST['q'])) {
 
     $offset=($pagina-1)*$TAMANO_PAGINA;
 
-    $sqlCount="SELECT COUNT(*) FROM  y_factura as f inner join y_client as c on f.IDCLIENTE=c.IDCLIENTE
-    where  CONCAT(c.NOMBRE,f.DESCRIP) like '%".$q."%'";
+    if ($idRol==1){
+        $sqlCount="SELECT COUNT(*) FROM  y_factura as f inner join y_client as c on f.IDCLIENTE=c.IDCLIENTE
+        where  CONCAT(c.NOMBRE,f.DESCRIP) like '%".$q."%'";
+    }else{
+        $sqlCount="SELECT COUNT(*) FROM  y_factura as f inner join y_client as c on f.IDCLIENTE=c.IDCLIENTE
+        where IDVENDEDOR=".$idVendor." and CONCAT(c.NOMBRE,f.DESCRIP) like '%".$q."%'";
+    }
 
     $total = $pdo->query($sqlCount)->fetchColumn();
     $pages = ceil($total/$TAMANO_PAGINA);
@@ -48,10 +53,25 @@ if(isset($_POST['q'])) {
     $sql.="c.NOMBRE, ";
     $sql.="f.FECHA ";
     $sql.="FROM y_factura as f inner join y_client as c on f.IDCLIENTE=c.IDCLIENTE ";
+    
+
+    
+
     if (empty($q)){
-        $sql.=" limit ".$offset.",".$TAMANO_PAGINA;    
+        if ($idRol==1){
+            $sql.=" limit ".$offset.",".$TAMANO_PAGINA;    
+        }else{
+            $sql.="WHERE IDVENDEDOR=".$idVendor." ";
+            $sql.=" limit ".$offset.",".$TAMANO_PAGINA;    
+        }
+            
+        
     }else{
-        $sql.="where  CONCAT(c.NOMBRE,f.DESCRIP) like '%".$q."%' limit ".$offset.",".$TAMANO_PAGINA;
+        if ($idRol==1){
+            $sql.="where  CONCAT(c.NOMBRE,f.DESCRIP) like '%".$q."%' limit ".$offset.",".$TAMANO_PAGINA;
+        }else{
+            $sql.="where and  IDVENDEDOR=".$idVendor." CONCAT(c.NOMBRE,f.DESCRIP) like '%".$q."%' limit ".$offset.",".$TAMANO_PAGINA;
+        }
     }
 
 
@@ -67,6 +87,11 @@ if(isset($_POST['q'])) {
         <span class="glyphicon glyphicon-edit"></span></button></td>';
         $data.='<td><button onclick="deleteFact('.$row['IDFACTURA'].')" class="btn btn-danger">
         <span class="glyphicon glyphicon-trash"></span></button></td>';
+        $data.='<td><button onclick="pdfFact('.$row['IDFACTURA'].')" class="btn btn-info">
+        <span class="glyphicon glyphicon-print"></span></button></td>';
+        $data.='<td><button onclick="pdfSend('.$row['IDFACTURA'].')" class="btn btn-info">
+        <span class="glyphicon glyphicon-envelope"></span></button></td>';
+
         $data.='</tr>';
     }
     $data.='</tbody>';

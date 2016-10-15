@@ -10,9 +10,13 @@ if(isset($_GET['q'])) {
             <table class="table table-condensed table-hover  table-bordered  table-responsive" >
             <thead class="thead-inverse" >
                 <tr>
-                    <th class="col-sm-4">Nombre</th>
+                    <th class="col-sm-3">Nombre</th>
                     <th class="col-sm-3">Apellido</th>
-                    <th class="col-sm-3">Email</th>
+                    <th class="col-sm-2">Email</th>
+                    <th class="col-sm-1">Código</th>
+                    <th class="col-sm-1">Codigo Postal</th>
+                    <th class="col-sm-1">Cdad </th>
+                    <th class="col-sm-1">Estado</th>
                 </tr>
             </thead>
             <tbody>';
@@ -29,7 +33,8 @@ if(isset($_GET['q'])) {
 
     $offset=($pagina-1)*$TAMANO_PAGINA;
 
-    $sqlCount="SELECT COUNT(*) FROM y_client where nombre like '%".$q."%'";
+    $sqlCount="SELECT COUNT(*) FROM y_client where CONCAT(NOMBRE,DIRECC,CDAD,ESTADO)  like '%".$q."%'";
+    //$sqlCount="SELECT COUNT(*) FROM y_client ";
 
     $total = $pdo->query($sqlCount)->fetchColumn();
     $pages = ceil($total/$TAMANO_PAGINA);
@@ -38,13 +43,18 @@ if(isset($_GET['q'])) {
     $pageDwn=$pageUp-$TAMANO_PAGINA;
 
 //creando bucle  tabla de datos 
-    $sql="SELECT * FROM y_client where nombre like '%".$q."%' limit ".$offset.",".$TAMANO_PAGINA;
+    $sql="SELECT * FROM y_client where CONCAT(NOMBRE,DIRECC,CDAD,ESTADO)  like '%".$q."%' limit ".$offset.",".$TAMANO_PAGINA;
+    //$sql="SELECT * FROM y_client  limit ".$offset.",".$TAMANO_PAGINA;
     foreach ($pdo->query($sql) as $row) 
     {
     	$data.='<tr>';
     	$data.='<td>'.$row['NOMBRE'].'</td>';
     	$data.='<td>'.$row['APELLIDO'].'</td>';
-    	$data.='<td>'.$row['EMAIL'].'</td>';
+        $data.='<td>'.$row['EMAIL'].'</td>';
+        $data.='<td>'.$row['CODIGO'].'</td>';
+        $data.='<td>'.$row['COD_POST'].'</td>';
+        $data.='<td>'.$row['CDAD'].'</td>';
+        $data.='<td>'.$row['ESTADO'].'</td>';
         $data.='<td><button onclick="loadClientData('.$row['IDCLIENTE'].')" class="btn btn-warning">
         <span class="glyphicon glyphicon-edit"></span>
         </button></td>';

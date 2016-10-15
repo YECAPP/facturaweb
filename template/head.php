@@ -11,17 +11,29 @@
         <link href="css/yec.css" rel="stylesheet" type="text/css" media="screen">
         <link href="js/jquery-ui/jquery-ui.min.css" rel="stylesheet" >
         <script src="js/chartjs/dist/Chart.bundle.min.js" type="text/javascript"></script>
+        
+
+        <!--<script src="js/otros/jquery-2.1.3.min.js"></script>-->
         <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+        <!--<script src="js/plugins/validation/dist/jquery.validate.min.js" type="text/javascript"></
+        <script src="js/plugins/validation/dist/additional-methods.min.js" type="text/javascript"></script>script>-->
+
+
+        <!--<link rel="stylesheet" href="css/otros/font-awesome.min.css">-->
         <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
 	<style>
     canvas{
         -moz-user-select: none;
         -webkit-user-select: none;
         -ms-user-select: none;
     }
+    
     </style>
+
 
 
     </head>
 
- <body>
+ <body >

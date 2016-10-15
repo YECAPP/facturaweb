@@ -24,7 +24,8 @@ if(isset($_POST['q']) && isset($_POST['idfact'])) {
     $sql.="f.CANTIDAD, ";
     $sql.="f.PRECIO, ";
     $sql.="f.IDPRODUCTO, ";
-    $sql.="f.IDFACTURA ";
+    $sql.="f.IDFACTURA, ";
+    $sql.="f.TAX ";
     $sql.="FROM y_facturaline as f inner join y_producto as p on f.IDPRODUCTO=p.IDPRODUCTO ";
     $sql.="WHERE f.IDFACTURA=".$idfact;
 
@@ -37,17 +38,22 @@ if(isset($_POST['q']) && isset($_POST['idfact'])) {
     //$data.=$sql;
     //$pdo = Database::connect();
     $subTotal=0.00;
+    $iva=0.00;
+    $total=0.00;
     foreach ($pdo->query($sql) as $row) 
     {
     	$data.='<tr>';
     	$data.='<td>'.$row['CODIGO'].'</td>';
-        $data.='<td>'.$row['DESCRIP'].'</td>';
+        $data.='<td>'.$row['DESCRIP'].'<div style="color:blue;width:25%;text-align:center;border-radius: 25px;" >('.$row['TAX'].'%)</div></td>';
     	$data.='<td>'.$row['CANTIDAD'].'</td>';
     	$data.='<td>'.$row['PRECIO'].'</td>';
         $data.='<td>'.$row['PRECIO']*$row['CANTIDAD'].'</td>';
         $data.='<td><button onclick="deleteFactLine('.$row['LINE'].','.$row['IDFACTURA'].')" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></button></td>';
     	$data.='</tr>';
+        
         $subTotal+=$row['PRECIO']*$row['CANTIDAD'];
+        $iva+=($row['PRECIO']*$row['CANTIDAD']*$row['TAX'])/100;
+        $total+=$row['PRECIO']*$row['CANTIDAD']*(1+$row['TAX']/100);
     }
         
         setlocale(LC_MONETARY, 'es_ES.UTF-8');
@@ -60,13 +66,13 @@ if(isset($_POST['q']) && isset($_POST['idfact'])) {
 
         $data.='<tr class="text-right">';
         $data.='<th class="text-right " colspan="4">Iva:</th>';
-        $data.='<th class="text-right info">'.money_format("%.2n",round($subTotal*0.21,2)).'</th>';
+        $data.='<th class="text-right info">'.money_format("%.2n",round($iva,2)).'</th>';
         $data.='</tr>';
         
 
         $data.='<tr class="text-right">';
         $data.='<th class="text-right " colspan="4">Total:</th>';
-        $data.='<th class="text-right info">'.money_format("%.2n",round($subTotal*1.21,2)).'</th>';
+        $data.='<th class="text-right info">'.money_format("%.2n",round($total,2)).'</th>';
         $data.='</tr>';
 
 

@@ -13,37 +13,45 @@
 <?php include_once 'template/navbar.php';?>
 
 <div class="container">
-    <div class="ycabecera bg-primary ">
-        <div class="row " >
-            <div class=" col-xs-12 col-md-12">
-                <h3>Vendedores</h3>
+    <div class="panel panel-primary ycabecera">
+        <div class="panel-heading" >
+            <div class="row " >
+                <div class=" col-xs-12 col-md-12">
+                    <h3>Vendedores</h3>
+                    <hr>
+                </div>
+            </div>
+            <div class="row ">
+                <div class=" col-md-10 ">
+                    <input type="text" class=" form-control"  placeholder="Introduzca su busqueda" id="textVendorBoxSearch">
+                </div>
+
+                <div class=" col-md-2 buttonNuevo">
+                    <button class="btn btn-default pull-right" id="vendorNuevoRegistro"  data-toggle="modal" data-target="#vendorNewForm" >
+                        Nuevo 
+                    <span class="glyphicon glyphicon-plus"  aria-hidden="true"></span>
+                    </button>
+                </div>
             </div>
         </div>
-        <div class="row ">
-            <div class=" col-xs-12 col-md-9 searchText">
-                <input type="text" class=" form-control" size="60" placeholder="Introduzca su busqueda" id="textProdBoxSearch">
+    
+        <div class="panel-body">
+            <div class="row" >
+                <div class=" col-xs-12 col-md-12" id="loaded"></div>
             </div>
-            <div class=" col-xs-12 col-md-1">
-                <button class="btn btn-primary" id="prodButtonLoad"  data-toggle="modal">
-                <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
-                Cargar
-                </button>
-            </div>
-            <div class="col-xs-12 col-md-2">
-                <button class="btn btn-success" id="prodNuevoRegistro"  data-toggle="modal" data-target="#prodNewForm" >
-                <span class="glyphicon glyphicon-new-window"  aria-hidden="true"></span>
-                Nuevo Registro
-                </button>
+        </div>
+        <div class="panel-footer">
+        <div class="row" >
+            <div class=" col-md-12 text-right" >
+                Vendedores        
             </div>
         </div>
     </div>
-    <div class="row" >
-            <div class=" col-xs-12 col-md-12" id="loaded"></div>
     </div>
 </div>
 
-<!-- Modal - NuevosProductos -->
-    <div class="modal fade" id="prodNewForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<!-- Modal - NuevosVendors -->
+    <div class="modal fade" id="vendorNewForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -52,40 +60,39 @@
                     </button>
                     <h4 class="modal-title" id="myModalLabel">Nuevo Registro</h4>
                 </div>
-
+            <form id="vendorform">
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="newCod">Código </label>
-                        <input type="text" id="newCod" placeholder="Código" class="form-control"/>
+                        <label for="newnombreUsr">Nombre  </label>
+                        <input type="text" id="newnombreUsr" placeholder="Nombre" class="form-control"/>
                     </div>
                     <div class="form-group">
-                        <label for="newDescrip">Descripción</label>
-                        <input type="text" id="newDescrip" placeholder="Descripción" class="form-control"/>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="newMarca">Marca</label>
-                        <input type="text" id="newMarca" placeholder="Marca" class="form-control"/>
+                        <label for="newapellido">Apellido</label>
+                        <input type="text" id="newapellido" placeholder="Apellido" class="form-control"/>
                     </div>
 
                     <div class="form-group">
-                        <label for="newModelo">Modelo</label>
-                        <input type="text" id="newModelo" placeholder="Modelo" class="form-control"/>
+                        <label for="newuser">Login</label>
+                        <input type="text" id="newuser" placeholder="Login" class="form-control"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="newpwd">Password</label>
+                        <input type="password" id="newpwd" placeholder="Password" class="form-control"/>
                     </div>
                     <div class="form-group">
-                        <label for="newCosto">Costo</label>
-                        <input type="text" id="newCosto" placeholder="Costo" class="form-control"/>
-                    </div>
-                    <div class="form-group">
-                        <label for="newPrecio">Precio</label>
-                        <input type="text" id="newPrecio" placeholder="Precio" class="form-control"/>
+                        <label for="newidRol">Idrol</label>
+                        <select class="form-control" id="newidRol">
+                            <?php include_once 'crud/vendorSelectTag.php'; ?>
+                        </select>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary" id="prodNewFormButtonSubmit" onclick="addProd()">Agregar Registro</button>
+                    <button type="button" class="btn btn-primary" id="vendorNewFormButtonSubmit"          onclick="addVendor()">Agregar Registro</button>
                     <input type="hidden" id="updateHiddenId" />
                 </div>
+            </form>
             </div>
         </div>
     </div>
@@ -96,142 +103,160 @@
 <script type="text/javascript">
 //buscar prod
     $('document').ready(function(){ 
-        prod("");
+        vendor("");
+   
+    $("#vendorform").validate({
+    rules: {
+        newnombreUsr: {
+            required: true,
+        },
+        newapellido: {
+            required: true,
+        }
+    },
+    messages: {
+        newnombreUsr: "Nombre nuevo",
+        newapellido: "apellido nuevo",
+    },
+    submitHandler: function() {
+      alert("formulario enviado");
+    }
+  });
+
     });
 
-    $('#prodNuevoRegistro').click(function(){
+
+
+
+
+
+
+    $('#vendorNuevoRegistro').click(function(){
         //$('#prodNewForm').modal("show");
-       $("#prodNewFormButtonSubmit").attr("onclick","addProd()")
-       $("#prodNewFormButtonSubmit").text("Nuevo");
+
+       $("#vendorNewFormButtonSubmit").attr("onclick","addVendor()")
+       $("#vendorNewFormButtonSubmit").text("Nuevo");
     });
 
-    $('#prodButtonLoad').click(function() {
-        prod(" ");
-             
+    //Realizar busqueda en el textbox
+    $('#textVendorBoxSearch').keyup(function() {
+        vendor(" ");
     });
 
-    $('#textProdBoxSearch').keyup(function() {
-        prod(" "); 
-    });
-
-
-    function addProd(){
+    function addVendor(){
+        nombreUsr=$("#newnombreUsr").val();
+        apellido=$("#newapellido").val();
+        user=$("#newuser").val();
+        pwd=$("#newpwd").val();
+        idRol=$("#newidRol").val();
         
-        codigo=$("#newCod").val();
-        descrip=$("#newDescrip").val();
-        marca=$("#newMarca").val();
-        modelo=$("#newModelo").val();
-        costo=$("#newCosto").val();
-        precio=$("#newPrecio").val();
 
-        target="crud/insertYProd.php";
+        target="crud/insertYVendor.php";
 
         $.post(target,{
-            codigo:codigo,
-            descrip:descrip,
-            marca:marca,
-            modelo:modelo,
-            costo:costo,
-            precio:precio
+            nombreUsr:nombreUsr,
+            apellido:apellido,
+            user:user,
+            pwd:pwd,
+            idRol:idRol
         },function(data,status){
-            $("#prodNewForm").modal("hide");
-            prod();
+            $("#vendorNewForm").modal("hide");
+            alert(data);
+            vendor();
             
-            $("#newCod").val("");
-            $("#newDescrip").val("");
-            $("#newMarca").val("");
-            $("#newModelo").val("");
-            $("#newCosto").val("");
-            $("#newPrecio").val("");
+            $("#newnombreUsr").val("");
+            $("#newapellido").val("");
+            $("#newuser").val("");
+            $("#newpwd").val("");
+            $("#newidRol").val("");
+            
         })
     }
-    function deleteProd(id){
+
+    function deleteVendor(id){
          
         var conf=confirm("Seguro de borrar");
         if (conf==true){
-            $.post("crud/delYProd.php",{id:id},function(data,status){ prod();});
+            $.post("crud/delYVendor.php",{id:id},
+                function(data,status){ 
+                    vendor();
+            });
         }
-
     }
 
-    function loadProdData(idprod){
+    function loadVendorData(idvendor){
 
-        $("#updateHiddenId").val(idprod);
+        $("#updateHiddenId").val(idvendor);
 
-        target="crud/loadYProd.php";
+        target="crud/loadYVendor.php";
 
-        $.post(target,{id:idprod},function(data,status){
+        $.post(target,{id:idvendor},function(data,status){
             
-            var prod=JSON.parse(data);
+            var vendor=JSON.parse(data);
 
-            $("#newCod").val(prod.CODIGO);
-            $("#newDescrip").val(prod.DESCRIP);
-            $("#newMarca").val(prod.MARCA);
-            $("#newModelo").val(prod.MODELO);
-            $("#newCosto").val(prod.COSTO);
-            $("#newPrecio").val(prod.PRECIO);  
+            $("#newnombreUsr").val(vendor.nombreUsr);
+            $("#newapellido").val(vendor.apellido);
+            $("#newuser").val(vendor.user);
+            $("#newpwd").val(vendor.pwd);
+            $("#newidRol").val(vendor.idRol);
+            $("#newalta").val(vendor.alta);  
 
         });
 
-        $("#prodNewForm").modal("show");
-        $("#prodNewFormButtonSubmit").attr("onclick","updateProd()");
-        $("#prodNewFormButtonSubmit").text("Cambiar");
+        $("#vendorNewForm").modal("show");
+        $("#vendorNewFormButtonSubmit").attr("onclick","updateVendor()");
+        $("#vendorNewFormButtonSubmit").text("Cambiar");
 
     }
 
 
-    function updateProd(){
-        var idprod=$("#updateHiddenId").val();
-        var codigo=$("#newCod").val();
-        var descrip=$("#newDescrip").val();
-        var marca=$("#newMarca").val();
-        var modelo=$("#newModelo").val();
-        var costo=$("#newCosto").val();
-        var precio=$("#newPrecio").val();
+    function updateVendor(){
+        var idvendor=$("#updateHiddenId").val();
+        var nombreUsr=$("#newnombreUsr").val();
+        var apellido=$("#newapellido").val();
+        var pwd=$("#newpwd").val();
+        var user=$("#newuser").val();
+        var idRol=$("#newidRol").val();
         
-        target="crud/updateYProd.php";
+        target="crud/updateYVendor.php";
         $.post(target,{
-            id:idprod,
-            codigo:codigo,
-            descrip:descrip,
-            marca:marca,
-            modelo:modelo,
-            costo:costo,
-            precio:precio
+            id:idvendor,
+            nombreUsr:nombreUsr,
+            apellido:apellido,
+            pwd:pwd,
+            user:user,
+            idRol:idRol
             },function(data,status){
-                $("#newCod").val("");
-            $("#newDescrip").val("");
-            $("#newMarca").val("");
-            $("#newModelo").val("");
-            $("#newCosto").val("");
-            $("#newPrecio").val("");
 
-                $("#prodNewForm").modal("hide"); 
-                prod();   
-            });
-
-        
-        
+                $("#updateHiddenId").val("");
+                $("#newnombreUsr").val("");
+                $("#newapellido").val("");
+                $("#newpwd").val("");
+                $("#newuser").val("");
+                $("#newidRol").val("");            
+            
+            $("#vendorNewForm").modal("hide"); 
+            vendor();   
+        });
     }
-    function prod(str,pag) {
+
+    function vendor(str,pag) {
 
         if (str === undefined || str.trim()==""){
-            str=$('#textProdBoxSearch').val();
+            str=$('#textVendorBoxSearch').val();
         }
         
         if (pag === undefined){
             pag=1;
         }
 
-        var target="crud/prod.php?q="+str+"&pagina="+pag;
+        var target="crud/vendor.php?q="+str+"&pagina="+pag;
         $.get( target, {}, function (data, status) {
             $("#loaded").html(data);
         });
     }
 
-
 </script>
 <!--Sección  productos-->
-
 
 <?php include_once 'template/foot.php';?>

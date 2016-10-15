@@ -26,12 +26,14 @@
 
     </div>
   <div class="collapse navbar-collapse "  id="myNavbar">
+  <?php if ( $_SESSION['idRol_session']==1):?>
     <ul class="nav navbar-nav">
       <li <?=echoActiveClassIfRequestMatches("home")?>> 
         <a href="home.php">
           <span class="glyphicon glyphicon-home" aria-hidden="true"> Inicio</span>
         </a>
       </li>
+  
       <li <?=echoActiveClassIfRequestMatches("client")?>>   
         <a href="client.php">
           <i class="fa fa-group"> Clientes</i>
@@ -52,6 +54,34 @@
           <i class="fa fa-user"> Vendedores</i>
         </a></li> 
     </ul>
+  <?php else: ?>
+      <ul class="nav navbar-nav">
+      <li <?=echoActiveClassIfRequestMatches("home")?>> 
+        <a href="home.php">
+          <span class="glyphicon glyphicon-home" aria-hidden="true"> Inicio</span>
+        </a>
+      </li>
+  
+      <li <?=echoActiveClassIfRequestMatches("client")?>>   
+        <a href="client.php">
+          <i class="fa fa-group"> Clientes</i>
+        </a>
+      </li>
+      <li <?=echoActiveClassIfRequestMatches("facturas")?>> 
+        <a href="facturas.php">
+          <i class="fa fa-edit"> Facturas</i>
+        </a>
+      </li> 
+      <li <?=echoActiveClassIfRequestMatches("prod")?>> 
+        <a href="prod.php">
+          <i class="fa fa-shopping-cart"> Productos</i>
+        </a>
+      </li>   
+    </ul>
+  <?php endif; ?>
+
+
+    
     <ul class="nav navbar-nav navbar-right">
       <?php if (  isset($_SESSION['user_session'])):?>
         <!--<div class="session" id="yec">-->

@@ -1,8 +1,8 @@
-load data infile '/home/yec/Documentos/clientes.csv'
+load data infile '/home/yec/Documentos/CLIENTESVER2.csv'
 into table y_client 
 fields terminated by ',' optionally enclosed by '"'
 lines terminated by '\n'  
-ignore 1 lines (CODIGO,NOMBRE,DIRECC,COD_POST,CDAD,ESTADO,TELEFONO,CODTRIB,EMAIL)
+ignore 2 lines (CODIGO,NOMBRE,DIRECC,COD_POST,CDAD,ESTADO,COD_POST,TELEFONO,COD_VENDOR,EMAIL)
 
 
 

@@ -88,6 +88,13 @@
                         <label for="newPrecio">Precio</label>
                         <input type="text" id="newPrecio" placeholder="Precio" class="form-control"/>
                     </div>
+                    <div class="form-group">
+
+                        <select class="form-control" id="newTax">
+                            <?php include_once 'crud/taxSelectTag.php'; ?>
+                        </select>
+                        
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
@@ -113,11 +120,6 @@
        $("#prodNewFormButtonSubmit").text("Nuevo");
     });
 
-    $('#prodButtonLoad').click(function() {
-        prod(" ");
-             
-    });
-
     $('#textProdBoxSearch').keyup(function() {
         prod(" "); 
     });
@@ -131,6 +133,7 @@
         modelo=$("#newModelo").val();
         costo=$("#newCosto").val();
         precio=$("#newPrecio").val();
+        tax=$("#newTax").val();
 
         target="crud/insertYProd.php";
 
@@ -140,7 +143,8 @@
             marca:marca,
             modelo:modelo,
             costo:costo,
-            precio:precio
+            precio:precio,
+            tax:tax
         },function(data,status){
             $("#prodNewForm").modal("hide");
             prod();
@@ -151,19 +155,18 @@
             $("#newModelo").val("");
             $("#newCosto").val("");
             $("#newPrecio").val("");
+            $("#newTax").val("");
         })
     }
+
     function deleteProd(id){
-         
         var conf=confirm("Seguro de borrar");
         if (conf==true){
             $.post("crud/delYProd.php",{id:id},function(data,status){ prod();});
         }
-
     }
 
     function loadProdData(idprod){
-
         $("#updateHiddenId").val(idprod);
 
         target="crud/loadYProd.php";
@@ -171,20 +174,20 @@
         $.post(target,{id:idprod},function(data,status){
             
             var prod=JSON.parse(data);
-
+            
             $("#newCod").val(prod.CODIGO);
             $("#newDescrip").val(prod.DESCRIP);
             $("#newMarca").val(prod.MARCA);
             $("#newModelo").val(prod.MODELO);
             $("#newCosto").val(prod.COSTO);
             $("#newPrecio").val(prod.PRECIO);  
+            $("#newTax").val(Number(prod.TAX)); 
 
         });
 
         $("#prodNewForm").modal("show");
         $("#prodNewFormButtonSubmit").attr("onclick","updateProd()");
         $("#prodNewFormButtonSubmit").text("Cambiar");
-
     }
 
 
@@ -196,7 +199,8 @@
         var modelo=$("#newModelo").val();
         var costo=$("#newCosto").val();
         var precio=$("#newPrecio").val();
-        
+        var tax=$("#newTax").val();
+
         target="crud/updateYProd.php";
         $.post(target,{
             id:idprod,
@@ -205,24 +209,23 @@
             marca:marca,
             modelo:modelo,
             costo:costo,
-            precio:precio
+            precio:precio,
+            tax:tax
             },function(data,status){
                 $("#newCod").val("");
-            $("#newDescrip").val("");
-            $("#newMarca").val("");
-            $("#newModelo").val("");
-            $("#newCosto").val("");
-            $("#newPrecio").val("");
+                $("#newDescrip").val("");
+                $("#newMarca").val("");
+                $("#newModelo").val("");
+                $("#newCosto").val("");
+                $("#newPrecio").val("");
+                $("#newTax").val("");
 
                 $("#prodNewForm").modal("hide"); 
                 prod();   
             });
-
-        
-        
     }
-    function prod(str,pag) {
 
+    function prod(str,pag) {
         if (str === undefined || str.trim()==""){
             str=$('#textProdBoxSearch').val();
         }

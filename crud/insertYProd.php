@@ -1,12 +1,12 @@
 <?php
 
-    if(	isset($_POST['codigo']) && 
-    	isset($_POST['descrip']) && 
-    	isset($_POST['marca']) && 
+    if(	isset($_POST['codigo'])	&& 
+    	isset($_POST['descrip'])&& 
+    	isset($_POST['marca']) 	&& 
     	isset($_POST['modelo']) && 
-    	isset($_POST['costo']) && 
-    	isset($_POST['precio'])
-    	){
+    	isset($_POST['costo']) 	&& 
+    	isset($_POST['precio']) &&
+		isset($_POST['tax']) ){
 			try {
 				require_once 'dbconfig.php'; //se cambio 2 de julio por no funcionar con la clase 
 
@@ -19,21 +19,24 @@
 	    		$modelo=$_POST['modelo'];
 	    		$costo=$_POST['costo'];
 	    		$precio=$_POST['precio'];
-	    	  		
+	    	  	$tax=$_POST['tax'];
+
 				$sql='INSERT INTO y_producto (
 					codigo,
 					descrip,
 					marca,
 					modelo,
 					costo,
-					precio) 
+					precio,
+					tax) 
 				VALUES (
 					:codigo,
 					:descrip,
 					:marca,
 					:modelo,
 					:costo,
-					:precio
+					:precio,
+					:tax
 					)';
 
 	  			$stmt = $pdo->prepare($sql);
@@ -43,7 +46,8 @@
 	  				':marca'=>$marca,
 	  				':modelo'=>$modelo,
 	  				':costo'=>$costo,
-	  				':precio'=>$precio
+	  				':precio'=>$precio,
+	  				':tax'=>$tax
 	  				));
 
 	  			

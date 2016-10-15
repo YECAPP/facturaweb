@@ -54,6 +54,9 @@ $('document').ready(function(){
 	$('#textFacturaBoxSearch').keyup(function() {
 		fact($('#textFacturaBoxSearch').val());
 	});
+
+
+
 	//fecha datepicker para generar calendario en la factura
 	$("#facturaNewFecha" ).datepicker({ dateFormat: 'yy-mm-dd' });
 
@@ -87,6 +90,8 @@ $('document').ready(function(){
 			$('#facturaNewNumero').val(arr[1]);
 			$('#facturaNewIdVendedor').val(arr[2]);
 			$("#facturaNewIdVendedor").attr("disabled", true);
+			//generando la fecha actual al dar click en nuevo 
+			$("#facturaNewFecha" ).datepicker().datepicker("setDate", new Date());
 			$("#facturaNewNumero").prop("readonly", true);
 		});
 		//ocultar el listado de facturas 
@@ -98,19 +103,38 @@ $('document').ready(function(){
 
 //guardar la factura completa, llama a facturaButtonSave() y luego oculta los paneles
 	$('#facturaButtonSave').click(function() {
+////////////////////////////////////////
+		//alert(validarFormatoFecha($("#facturaNewFecha" ).val()));
+		//return false ;
+
+
 		facturaButtonSave();
 		$(".ydetail").fadeIn("slow",function(){});
 		$("#list").fadeIn("slow",function(){
-			
+
 		});	
 	});
+
+function validarFormatoFecha(campo) {
+      var RegExPattern = /^\d{1,2}\/\d{1,2}\/\d{2,4}$/;
+      if ((campo.match(RegExPattern)) && (campo!='')) {
+            return true;
+      } else {
+            return false;
+      }
+}
 
 	//funcion que captura todos los datos de la factura y se prepara para guardarlos
 	function facturaButtonSave(){
 			var idfactura=$("#facturaNewHidden").val();
 			var numero=$("#facturaNewNumero").val();
 			var idcliente=$("#facturaNewIdcliente").val();
+			if (idcliente==null || idcliente.lenght==0){
+				alert("Cliente esta vacío");
+				return false;
+			}else{
 
+			}
 			var fecha=$("#facturaNewFecha").val();
 			
 			var idvendedor=$("#facturaNewIdVendedor").val();
@@ -129,12 +153,13 @@ $('document').ready(function(){
 				descrip:descrip
 				}, function (data, status) {
 
-					var idfactura=$("#facturaNewHidden").val("");
-					var numero=$("#facturaNewNumero").val("");
-					var idcliente=$("#facturaNewIdcliente").val("");
-					var fecha=$("#facturaNewFecha").val("");		
-					var idvendedor=$("#facturaNewIdVendedor").val("");
-					var descrip=$("#facturaNewDescrip").val("");
+					$("#facturaNewHidden").val("");
+					$("#facturaNewNumero").val("");
+					$("#facturaNewIdcliente").val("");
+					$("#facturaNewFecha").val("");		
+					$("#facturaNewIdVendedor").val("");
+					$("#facturaNewDescrip").val("");
+					
 					$(".ycabecera").fadeIn("slow",function(){
 					$(".ydetail").fadeOut();	});
 					$("#facturaLine").html("<p class='text-center bg-info><br><br><br>Sin productos<br><br><br></p>");
@@ -204,6 +229,8 @@ $('document').ready(function(){
 		facturaNewLineBuscar();
 	});
 
+
+
 	function facturaNewLineBuscar(str,pag) {
 
 		
@@ -232,12 +259,12 @@ $('document').ready(function(){
 
 	//Boton seleccionar productos desde el cuadro modal 
 	function facturaNewLineBuscarSelect(idprod,idfact) {
-			/*alert(idprod);file
-			alert(idfact);*/
-			
-
+	
 			cantidad=$("#facturaNewLineBuscarSelectCant_"+idprod).val();
 			precio=$("#facturaNewLineBuscarSelectPrec_"+idprod).val();
+			tax=$("#facturaNewLineBuscarSelectTax_"+idprod).val();
+			
+
 
 			//alert(cantidad);
 			//alert(precio);
@@ -245,27 +272,109 @@ $('document').ready(function(){
 				idprod: idprod,
 				idfactura:idfact,
 				cantidad: cantidad,
-				precio:precio
+				precio:precio,
+				tax:tax
 			}, function (data,status){
 				
 				factline(idfact);
 
 			});	
 	}
+//load factura
+    function loadFactData(idfact){
+
+        $("#facturaNewHidden").val(idfact);
+
+        target="crud/loadYFact.php";
+
+        $.post(target,{id:idfact},function(data,status){
+            
+            var fact=JSON.parse(data);
+
+            $("#facturaNewNumero").val(fact.NUMERO);
+            $("#facturaNewFecha").val(fact.FECHA);
+            
+            $("#facturaNewIdcliente").val(fact.IDCLIENTE);
+            $("#facturaNewIdVendedor").val(fact.IDVENDEDOR);
+            $("#facturaNewDescrip").val(fact.DESCRIP);
+            factline(idfact);
+        });
+
+		$("#list").fadeOut("slow",function(){});
+		$(".ycabecera").fadeOut("slow",function(){
+		$(".ydetail").fadeIn("slow",function(){});
+		});		
+
+        //$("#prodNewForm").modal("show");
+        //$("#prodNewFormButtonSubmit").attr("onclick","updateProd()");
+        //$("#prodNewFormButtonSubmit").text("Cambiar");
+
+    }
+
+
+//Imprimir la facturas
+	//Imprimir la factura en pdf
+	function pdfFact(idfact) {			
+		
+		popUp('pdfFact.php?idfact='+idfact,'Factura','','1024','768','true');
+
+	}
+
+	function pdfSend(idfact) {			
+		
+		popUp('pdfFactForSend.php?idfact='+idfact,'Factura','','1024','768','true');
+		
+
+	}
+
+function popUp(theURL,winName,features, myWidth, myHeight, isCenter) { //v3.0
+  if(window.screen)if(isCenter)if(isCenter=="true"){
+    var myLeft = (screen.width-myWidth)/2;
+    var myTop = (screen.height-myHeight)/2;
+    features+=(features!='')?',':'';
+    features+=',left='+myLeft+',top='+myTop;
+  }
+  window.open(theURL,winName,features+((features!='')?',':'')+'width='+myWidth+',height='+myHeight);
+}
 
 
 
+//nuevo popup para buscar clientes 
+function facturaClienteBuscar(str,pag){
+	//capturando el id de la factura 
+	var idfact=$("#facturaNewHidden").val();
 
+	
+	if (str === undefined|| str.trim()==""){
+			//texbox de busqueda para nuevos clientes 
+			str=$('#txtFacturaClienteBuscar').val();
+		}
 
+	//sino se ha definidio pagina poner uno 
+	if (pag === undefined){
+		pag=1;
+	}
 
+	var target="crud/clientLines.php";
+	$.post( target, {
+			idfact:idfact,
+			q:str,
+			pagina:pag
+			}, function (data, status) {
+			$("#LoadFacturaClienteBuscar").html(data);
+		});		
+}
 
+$('#txtFacturaClienteBuscar').keyup(function() {
+	facturaClienteBuscar($('#txtFacturaClienteBuscar').val());
+});
 
+function btnFacturaClienteBuscarSelect(idcliente,idfact){
+	
+	$("#facturaNewIdcliente").val(idcliente);
 
-
-
-
-
-
+	 $('#formFacturaClienteBuscar').modal('toggle');
+}
 
 
 
@@ -279,6 +388,8 @@ $('document').ready(function(){
 
 
 //funciones de clientes ***********************************************************************************************
+
+
 	function deleteClient(id){
 		var conf=confirm("Seguro de borrar");
 		if (conf==true){
@@ -287,7 +398,7 @@ $('document').ready(function(){
 	}
 
 	function loadClientData(idClie){
-		$("#updateHiddenId").val(idClie);
+		$("#newHiddenId").val(idClie);
 
 		$.post("crud/loadYClient.php",{
 			id:idClie
@@ -295,83 +406,127 @@ $('document').ready(function(){
 
 			var client=JSON.parse(data);
 
-
-			$("#updateNombre").val(client.NOMBRE);
-			$("#updateApellido").val(client.APELLIDO);
-			$("#updateEmail").val(client.EMAIL);
-
+			$("#newNombre").val(client.NOMBRE);
+			$("#newApellido").val(client.APELLIDO);
+			$("#newEmail").val(client.EMAIL);
+			
+			$("#newTelefono").val(client.TELEFONO);
+			$("#newCodigo").val(client.CODIGO);
+			$("#newCodPost").val(client.DIRECC);
+			$("#newCdad").val(client.COD_POST);
+			$("#newDirecc").val(client.DIRECC);
+			$("#newEstado").val(client.CDAD);
+			$("#newCodtrib").val(client.ESTADO);
+			$("#newEstado").val(client.CODTRIB);
 		}
 		);
 
-		$("#updateForm").modal("show");
+		$("#newForm").modal("show");
+		$("#clientNuevoRegistro").attr("onclick","updateClient()");
+        $("#clientNuevoRegistro").text("Cambiar");
 	}
 
 
 	function updateClient() {
-		var updateNombre = $("#updateNombre").val();
-		var updateApellido = $("#updateApellido").val();
-		var updateEmail = $("#updateEmail").val();
+		var newNombre = $("#newNombre").val();
+		var newApellido = $("#newApellido").val();
+		var newEmail = $("#newEmail").val();
+		var newTelefono=$("#newTelefono").val();
+		var newCodigo=$("#newCodigo").val();
+		var newCodPost=$("#newCodPost").val();
+		var newCdad	=$("#newCdad").val();
+		var newDirecc=$("#newDirecc").val();
+		var newEstado=$("#newEstado").val();
+		var newCodtrib=$("#newCodtrib").val();
+		var newEstado=$("#newEstado").val();
 
-		var updateIdCliente=$("#updateHiddenId").val();
+		var updateIdCliente=$("#newHiddenId").val();
 
 		$.post("crud/updateYClient.php",{
-			nombre:updateNombre,
-			apellido:updateApellido,
-			email:updateEmail,
+			nombre:newNombre,
+			apellido:newApellido,
+			email:newEmail,
+			telefono:newTelefono,
+			codigo:newCodigo,
+			codpost:newCodPost,
+			cdad:newCdad,
+			direcc:newDirecc,
+			estado:newEstado,
+			codtrib:newCodtrib,
+			estado:newEstado,
 			id:updateIdCliente
 			},
 			function(data,status){
-				$("#updateForm").modal("hide");	
+				
+				$("#newNombre").val("");
+				$("#newApellido").val("");
+				$("#newEmail").val("");
+				$("#newTelefono").val("");
+				$("#newCodigo").val("");
+				$("#newCodPost").val("");
+				$("#newCdad").val("");
+				$("#newDirecc").val("");
+				$("#newEstado").val("");
+				$("#newCodtrib").val("");
+				$("#newEstado").val("");
+				$("#newHiddenId").val("");
+
+				$("#newForm").modal("hide");	
 				client();	
 			});
 	}
 
 	function addClient() {
-
-		var newNombre=$("#newNombre").val();
-		var newApellido=$("#newApellido").val();
-		var newEmail=$("#newEmail").val();
 		
-
-		
+		var newNombre = $("#newNombre").val();
+		var newApellido = $("#newApellido").val();
+		var newEmail = $("#newEmail").val();
+		var newTelefono=$("#newTelefono").val();
+		var newCodigo=$("#newCodigo").val();
+		var newCodPost=$("#newCodPost").val();
+		var newCdad	=$("#newCdad").val();
+		var newDirecc=$("#newDirecc").val();
+		var newEstado=$("#newEstado").val();
+		var newCodtrib=$("#newCodtrib").val();
+		var newEstado=$("#newEstado").val();
+	
 		$.post("crud/insertYClient.php",{
 			nombre: newNombre,
 			apellido: newApellido,
-			email: newEmail
+			email: newEmail,
+			telefono:newTelefono,
+			codigo:newCodigo,
+			codpost:newCodPost,
+			cdad:newCdad,
+			direcc:newDirecc,
+			estado:newEstado,
+			codtrib:newCodtrib,
+			estado:newEstado
 		}, function (data,status){
 			$("#newForm").modal("hide");
 			
+			alert(status);
+
 			client();
 
 			$("#newNombre").val("");
 			$("#newApellido").val("");
 			$("#newEmail").val("");
+			$("#newTelefono").val("");
+			$("#newCodigo").val("");
+			$("#newCodPost").val("");
+			$("#newCdad").val("");
+			$("#newDirecc").val("");
+			$("#newEstado").val("");
+			$("#newCodtrib").val("");
+			$("#newEstado").val("");
+			$("#newHiddenId").val("");
+
 		});
 	}
 
 
-	function addRecord() {
-
-		var newNombre=$("#newNombre").val();
-		var newApellido=$("#newApellido").val();
-		var newEmail=$("#newEmail").val();
-		
-		
-		$.post("crud/insertYClient.php",{
-			nombre: newNombre,
-			apellido: newApellido,
-			email: newEmail
-		}, function (data,status){
-			$("#newForm").modal("hide");
-			
-			client();
-
-			$("#newNombre").val("");
-			$("#newApellido").val("");
-			$("#newEmail").val("");
-		});
-	}
-
+	
 	function client(str,pag) {
 		
 		if (str === undefined || str.trim()==""){

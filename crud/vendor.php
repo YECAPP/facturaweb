@@ -10,12 +10,12 @@ if(isset($_GET['q'])) {
 	$data='<table class="table table-striped table-bordered  table-responsive">
             <thead>
                 <tr>
-                    <th class="col-sm-2">Codigo Producto</th>
-                    <th class="col-sm-3">Descripción</th>
-                    <th class="col-sm-3">Marca</th>
-                    <th class="col-sm-3">Modelo</th>
-                    <th class="col-sm-2">Costo</th>
-                    <th class="col-sm-2">Precio</th>
+                    <th class="col-sm-2">Nombre</th>
+                    <th class="col-sm-3">Apellido</th>
+                    <th class="col-sm-3">User</th>
+                    <th class="col-sm-3">Pwd</th>
+                    <th class="col-sm-2">Alta</th>
+                    <th class="col-sm-2">Idrol</th>
                 </tr>
             </thead>
             <tbody>';
@@ -29,7 +29,7 @@ if(isset($_GET['q'])) {
 
     $offset=($pagina-1)*$TAMANO_PAGINA;
 
-    $sqlCount="SELECT COUNT(*) FROM y_producto where descrip like '%".$q."%'";
+    $sqlCount="SELECT COUNT(*) FROM y_user where CONCAT(nombreUsr,apellido) like '%".$q."%'";
 
     $total = $pdo->query($sqlCount)->fetchColumn();
     $pages = ceil($total/$TAMANO_PAGINA);
@@ -39,10 +39,10 @@ if(isset($_GET['q'])) {
 
 //Creadno bucle de datos   
     if (empty($q)){
-        $sql="SELECT * FROM y_producto limit ".$offset.",".$TAMANO_PAGINA;
+        $sql="SELECT * FROM y_user limit ".$offset.",".$TAMANO_PAGINA;
     }else{
-        $sql="SELECT * FROM y_producto 
-        where DESCRIP like '%".$q."%' limit ".$offset.",".$TAMANO_PAGINA;    
+        $sql="SELECT * FROM y_user 
+        where UPPER(CONCAT(nombreUsr,apellido)) like '%".$q."%' limit ".$offset.",".$TAMANO_PAGINA;    
     }
     
     //$pdo = Database::connect();
@@ -50,15 +50,15 @@ if(isset($_GET['q'])) {
     {
         
     	$data.='<tr>';
-    	$data.='<td>'.$row['CODIGO'].'</td>';
-        $data.='<td>'.$row['DESCRIP'].'</td>';
-        $data.='<td>'.$row['MARCA'].'</td>';
-        $data.='<td>'.$row['MODELO'].'</td>';
-        $data.='<td>'.$row['COSTO'].'</td>';
-        $data.='<td>'.$row['PRECIO'].'</td>';
-        $data.='<td><button onclick="loadProdData('.$row['IDPRODUCTO'].')" class="btn btn-warning">
+    	$data.='<td>'.$row['nombreUsr'].'</td>';
+        $data.='<td>'.$row['apellido'].'</td>';
+        $data.='<td>'.$row['user'].'</td>';
+        $data.='<td>'.$row['pwd'].'</td>';
+        $data.='<td>'.$row['alta'].'</td>';
+        $data.='<td>'.$row['idRol'].'</td>';
+        $data.='<td><button onclick="loadVendorData('.$row['idUser'].')" class="btn btn-warning">
         <span class="glyphicon glyphicon-edit"></span></button></td>';
-        $data.='<td><button onclick="deleteProd('.$row['IDPRODUCTO'].')" class="btn btn-danger">
+        $data.='<td><button onclick="deleteVendor('.$row['idUser'].')" class="btn btn-danger">
         <span class="glyphicon glyphicon-trash"></span></button></td>';
     	$data.='</tr>';
     }
@@ -70,7 +70,7 @@ if(isset($_GET['q'])) {
     //si el pagdown es diferente de cero crear un pagePrevious
     if ($pageDwn!=0){
         $pagePrevious=$pageDwn;
-        $lcAction='onclick=" prod('."' ',".$pagePrevious.' )"';
+        $lcAction='onclick=" vendor('."' ',".$pagePrevious.' )"';
         $data.="<li><a href='#'".$lcAction." > << </a ></li>";
     }
     
@@ -90,7 +90,7 @@ if(isset($_GET['q'])) {
             $classActive='';
         }
         //Create Link 
-        $enlace='onclick=" prod('."' '".','.$i.'); "';
+        $enlace='onclick=" vendor('."' '".','.$i.'); "';
 
 
         $data.='<li'.$classActive.'><a href="javascript:void(0)" '.$enlace.'>'.$i.'</a></li>';       
